@@ -48,7 +48,7 @@
                     </div>
 
                     <div class="form-group">
-                      <label for="value">Valur</label>
+                      <label for="value">Value</label>
                       <input type="text" class="form-control" id="value" name="value" placeholder="Enter contract number" required>
                     </div>
                     
