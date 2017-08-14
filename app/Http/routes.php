@@ -21,5 +21,10 @@ Route::get('auth/register', 'Auth\AuthController@getRegister');
 Route::post('auth/register', 'Auth\AuthController@postRegister');
 
 Route::get('/', 'DashboardController@getDashboard');
+
 Route::get('/performance_budget', 'PerformanceBudgetController@getPerformanceBudget');
+Route::get('/performance_budget/datatables', 'PerformanceBudgetController@getDatatables');
 Route::get('/performance_budget/add', 'PerformanceBudgetController@getAdd');
+Route::post('/performance_budget/add', 'PerformanceBudgetController@doAdd');
+Route::get('/performance_budget/edit/{id?}', 'PerformanceBudgetController@getAdd');
+Route::post('/performance_budget/edit/{id?}', 'PerformanceBudgetController@doAdd');

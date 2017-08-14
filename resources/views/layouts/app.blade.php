@@ -15,6 +15,8 @@
        folder instead of downloading all of them to reduce the load. -->
   <link rel="stylesheet" href="assets/css/skins/_all-skins.min.css">
 
+  @yield('head_css')
+
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -145,5 +147,8 @@
 <script src="assets/plugins/fastclick/fastclick.js"></script>
 <script src="assets/js/app.min.js"></script>
 {{-- <script src="assets/js/demo.js"></script> --}}
+
+@yield('bottom_script')
+
 </body>
 </html>
