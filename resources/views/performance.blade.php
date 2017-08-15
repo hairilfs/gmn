@@ -3,7 +3,7 @@
 @section('nav_pb', 'active')
 
 @section('head_css')
-<link rel="stylesheet" type="text/css" href="assets/plugins/datatables/dataTables.bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="assets/plugins/datatables/dataTables.bootstrap.css">
 @endsection
 
 @section('content')

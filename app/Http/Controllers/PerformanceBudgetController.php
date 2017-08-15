@@ -8,6 +8,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use App\PerformanceBudget;
+use App\PerformanceBudgetDetail;
 use Datatables;
 
 class PerformanceBudgetController extends Controller
@@ -22,7 +23,9 @@ class PerformanceBudgetController extends Controller
     {
         return Datatables::of(PerformanceBudget::query())
         ->addColumn('action', function ($data) {
-                return '<a href="'.url('performance_budget/edit/'.$data->id).'" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i> Edit</a>';
+                $btn_action = '<a href="'.url('performance_budget/edit/'.$data->id).'" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i> Edit</a> &nbsp;';
+                $btn_action .= '<a href="'.url('performance_budget/detail/'.$data->id).'" class="btn btn-xs btn-success"><i class="glyphicon glyphicon-plus"></i> Detail</a>';
+                return $btn_action;
             })
         ->make(true);
     }
@@ -63,6 +66,56 @@ class PerformanceBudgetController extends Controller
         
         $pb->save();
 
-    	return redirect('performance_budget');
+        return redirect('performance_budget');
+    }
+
+    public function getDetail(Request $request, $id=null)
+    {
+        $this->data['pb'] = PerformanceBudget::findOrFail($id);
+        return view('performance_detail', $this->data);
+    } 
+
+    public function doDetail(Request $request, $id=null, $edit=false)
+    {
+        $this->validate($request, [
+                'pekerjaan' => 'required',
+                'qty' => 'required|numeric',
+                'satuan' => 'required',
+                'harga' => 'required',
+            ]);
+
+        $pb = $edit ? PerformanceBudgetDetail::findOrFail($id) : new PerformanceBudgetDetail;
+
+        $pb->performance_budget_id  = $id;
+        $pb->pekerjaan  = $request->input('pekerjaan');
+        $pb->qty        = $request->input('qty');
+        $pb->satuan     = $request->input('satuan');
+
+        $trans = array('Rp ' => '', '.' => '');
+        $value = strtr($request->input('harga'), $trans);
+        $pb->harga              = (int)$value;
+        
+        $pb->save();
+
+        return redirect('performance_budget/detail/'.$id);
+    }
+
+    public function getDetailDatatables(Request $request, $id=null)
+    {
+        $data = PerformanceBudgetDetail::where('performance_budget_id', $id)->get();
+        return Datatables::of($data)
+        ->editColumn('harga', function(PerformanceBudgetDetail $data){
+            return "Rp " . number_format($data->harga,0,',','.');
+        })->editColumn('total_harga', function(PerformanceBudgetDetail $data){
+            $total = $data->harga * $data->qty;
+            return "Rp " . number_format($total,0,',','.');
+        })
+        ->addColumn('action', function ($data) {
+            $btn_action = '<a href="'.url('performance_budget/edit/'.$data->id).'" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i> Edit</a> &nbsp;';
+            $btn_action .= '<a href="'.url('performance_budget/detail/'.$data->id).'" class="btn btn-xs btn-success"><i class="glyphicon glyphicon-plus"></i> Detail</a>';
+            return $btn_action;
+        })
+        ->make(true);
+
     }
 }
