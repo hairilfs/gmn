@@ -29,5 +29,6 @@ Route::post('/performance_budget/add', 'PerformanceBudgetController@doAdd');
 Route::get('/performance_budget/edit/{id?}', 'PerformanceBudgetController@getAdd');
 Route::post('/performance_budget/edit/{id?}', 'PerformanceBudgetController@doAdd');
 Route::get('/performance_budget/detail/{id?}', 'PerformanceBudgetController@getDetail');
-Route::post('/performance_budget/detail/{id?}/{edit?}', 'PerformanceBudgetController@doDetail');
+Route::post('/performance_budget/detail/{id?}', 'PerformanceBudgetController@doDetail');
+Route::get('/performance_budget/detail/delete/{id?}', 'PerformanceBudgetController@doDetailDelete');
 Route::get('/performance_budget/detail/datatables/{id?}', 'PerformanceBudgetController@getDetailDatatables');

@@ -24,7 +24,7 @@ class PerformanceBudgetController extends Controller
         return Datatables::of(PerformanceBudget::query())
         ->addColumn('action', function ($data) {
                 $btn_action = '<a href="'.url('performance_budget/edit/'.$data->id).'" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i> Edit</a> &nbsp;';
-                $btn_action .= '<a href="'.url('performance_budget/detail/'.$data->id).'" class="btn btn-xs btn-success"><i class="glyphicon glyphicon-plus"></i> Detail</a>';
+                $btn_action .= '<a href="'.url('performance_budget/detail/'.$data->id).'" class="btn btn-xs btn-success"><i class="glyphicon glyphicon-search"></i> Detail</a>';
                 return $btn_action;
             })
         ->make(true);
@@ -75,7 +75,7 @@ class PerformanceBudgetController extends Controller
         return view('performance_detail', $this->data);
     } 
 
-    public function doDetail(Request $request, $id=null, $edit=false)
+    public function doDetail(Request $request, $id=null)
     {
         $this->validate($request, [
                 'pekerjaan' => 'required',
@@ -84,9 +84,18 @@ class PerformanceBudgetController extends Controller
                 'harga' => 'required',
             ]);
 
-        $pb = $edit ? PerformanceBudgetDetail::findOrFail($id) : new PerformanceBudgetDetail;
+        if($request->input('edit'))
+        {
+            $pb = PerformanceBudgetDetail::findOrFail($request->input('edit'));
+            $notif = 'Edit data success!';
+        }
+        else 
+        {
+            $pb = new PerformanceBudgetDetail;
+            $pb->performance_budget_id  = $id;
+            $notif = 'Add data success!';
+        }
 
-        $pb->performance_budget_id  = $id;
         $pb->pekerjaan  = $request->input('pekerjaan');
         $pb->qty        = $request->input('qty');
         $pb->satuan     = $request->input('satuan');
@@ -100,6 +109,23 @@ class PerformanceBudgetController extends Controller
         return redirect('performance_budget/detail/'.$id);
     }
 
+    public function doDetailDelete(Request $request, $id=null)
+    {
+        if($id)
+        {
+            $pbd = PerformanceBudgetDetail::findOrFail($id);
+            $id_pb = $pbd->performance_budget_id;
+            $pbd->delete();
+            $notif = 'Delete data success!';
+            return redirect('performance_budget/detail/'.$id_pb);
+        } 
+        else 
+        {
+            return redirect('performance_budget');
+        }
+
+    }
+
     public function getDetailDatatables(Request $request, $id=null)
     {
         $data = PerformanceBudgetDetail::where('performance_budget_id', $id)->get();
@@ -110,11 +136,28 @@ class PerformanceBudgetController extends Controller
             $total = $data->harga * $data->qty;
             return "Rp " . number_format($total,0,',','.');
         })
-        ->addColumn('action', function ($data) {
-            $btn_action = '<a href="'.url('performance_budget/edit/'.$data->id).'" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i> Edit</a> &nbsp;';
-            $btn_action .= '<a href="'.url('performance_budget/detail/'.$data->id).'" class="btn btn-xs btn-success"><i class="glyphicon glyphicon-plus"></i> Detail</a>';
+        ->addColumn('action', function (PerformanceBudgetDetail $data) {
+            $btn_action  = '<a href="#" onclick="return false;" class="btn btn-xs btn-primary edit-pb-detail" data-toggle="modal" data-target="#myModal"><i class="glyphicon glyphicon-edit"></i> Edit</a> &nbsp;';
+            $btn_action .= '<a href="'.url('performance_budget/detail/delete/'.$data->id).'" onclick="return confirmDelete(\''.$data->pekerjaan.'\')" class="btn btn-xs btn-danger"><i class="glyphicon glyphicon-remove"></i> Delete</a>';
             return $btn_action;
         })
+        ->setRowAttr([
+            'data-id' => function(PerformanceBudgetDetail $data) {
+                return $data->id;
+            },
+            'data-pekerjaan' => function(PerformanceBudgetDetail $data) {
+                return $data->pekerjaan;
+            },
+            'data-qty' => function(PerformanceBudgetDetail $data) {
+                return $data->qty;
+            },
+            'data-satuan' => function(PerformanceBudgetDetail $data) {
+                return $data->satuan;
+            },
+            'data-harga' => function(PerformanceBudgetDetail $data) {
+                return $data->harga;
+            }
+        ])
         ->make(true);
 
     }

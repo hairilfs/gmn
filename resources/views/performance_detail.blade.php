@@ -20,7 +20,9 @@
             </div>
 
             <div class="box-body"> 
-                <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal">Add new</button>
+                <div class="text-center">
+                    <button class="btn btn-success btn-sm" data-toggle="modal" data-target="#myModal">Add new!</button>
+                </div>
                 <table class="table table-bordered" id="performance_budget">
                     <thead>
                         <tr>
@@ -76,6 +78,7 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                         <button type="submit" class="btn btn-primary">Save</button>
+                        <input type="hidden" name="edit" value="1" disabled>
                     </div>
 
                 </form>
@@ -123,7 +126,37 @@ $(function() {
         $(this).find('[type=submit]').html('Saving...');
     });
 
+    $('#myModal').on('show.bs.modal', function (e) {
+        
+        if($(e.relatedTarget).hasClass('edit-pb-detail')) {
+            $('#myModalLabel').html('Edit Pekerjaan');
+            var _datax = $(e.relatedTarget).parents('tr');
+
+            $('#pekerjaan').val(_datax.data('pekerjaan'));
+            $('#qty').val(_datax.data('qty'));
+            $('#satuan').val(_datax.data('satuan'));
+            $('#harga').maskMoney('mask', _datax.data('harga'));
+            $('input[name=edit]').prop('disabled', false).val(_datax.data('id'));
+
+        } else {
+            $('#myModalLabel').html('Tambah Pekerjaan');
+            $('#new_detail')[0].reset();
+            $('input[name=edit]').prop('disabled', true);
+        }
+
+
+    });
+
 });
+
+function confirmDelete(title) {
+    var x = confirm("Yakin akan menghapus '"+title+"'");
+    if(x) {
+        return true;
+    } else {
+        return false;
+    }
+}
 
 </script>
 @endsection
