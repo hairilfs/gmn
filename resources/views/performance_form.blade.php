@@ -37,29 +37,29 @@
                         <div class="box-body">
                             <div class="form-group">
                                 <label for="client_name">Client Name</label>
-                                <input type="text" class="form-control" name="client_name" id="client_name" placeholder="Enter name" >
+                                <input type="text" class="form-control" name="client_name" id="client_name" value="{{ $pb->client_name }}" placeholder="Enter name" >
                             </div>
                             <div class="form-group">
                                 <label for="client_address">Client Address</label>
-                                <textarea class="form-control" name="client_address" rows="3" id="client_address" placeholder="Enter client address" required></textarea>
+                                <textarea class="form-control" name="client_address" rows="3" id="client_address" placeholder="Enter client address" required>{{ $pb->client_address }}</textarea>
                             </div>
                             <div class="form-group">
                                 <label for="job_title">Job Title</label>
-                                <input type="text" class="form-control" id="job_title" name="job_title" placeholder="Enter job title" required>
+                                <input type="text" class="form-control" id="job_title" name="job_title" value="{{ $pb->job_title }}" placeholder="Enter job title" required>
                             </div>
                             <div class="form-group">
                                 <label for="contract_number">Contract Number</label>
-                                <input type="text" class="form-control" id="contract_number" name="contract_number" placeholder="Enter contract number" required>
+                                <input type="text" class="form-control" id="contract_number" name="contract_number" value="{{ $pb->contract_number }}" placeholder="Enter contract number" required>
                             </div>
 
                             <div class="form-group">
                                 <label for="contract_date">Contract Date</label>
-                                <input type="text" class="form-control" id="contract_date" name="contract_date" placeholder="Enter contract number" required>
+                                <input type="text" class="form-control" id="contract_date" name="contract_date" value="{{ $pb->contract_date ? date('d-m-Y', strtotime($pb->contract_date)) : '' }}" placeholder="Enter contract date" required>
                             </div>
 
                             <div class="form-group">
                                 <label for="value">Value</label>
-                                <input type="text" class="form-control" id="value" name="value" placeholder="Enter contract number" required>
+                                <input type="text" class="form-control" id="value" name="value" placeholder="Enter contract value" required>
                             </div>
 
                         </div>
@@ -106,6 +106,10 @@
         precision: 0
 
     });
+
+    @if ($pb->value)
+        $('#value').maskMoney('mask', {{ $pb->value }});
+    @endif
 
 </script>
 @endsection

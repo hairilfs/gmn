@@ -26,8 +26,11 @@ class PerformanceBudgetController extends Controller
                 $btn_action = '<a href="'.url('performance_budget/edit/'.$data->id).'" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i> Edit</a> &nbsp;';
                 $btn_action .= '<a href="'.url('performance_budget/detail/'.$data->id).'" class="btn btn-xs btn-success"><i class="glyphicon glyphicon-search"></i> Detail</a>';
                 return $btn_action;
-            })
-        ->make(true);
+        })->editColumn('value', function(PerformanceBudget $data){
+            return "Rp " . number_format($data->value,0,',','.');
+        })->editColumn('contract_date', function(PerformanceBudget $data){
+            return date('d M Y', strtotime($data->contract_date));
+        })->make(true);
     }
 
     public function getPerformanceBudget()
@@ -35,8 +38,9 @@ class PerformanceBudgetController extends Controller
         return view('performance');
     }
 
-    public function getAdd(Request $request)
+    public function getAdd(Request $request, $id=null)
     {
+        $this->data['pb'] = $id ? PerformanceBudget::findOrFail($id) : new PerformanceBudget;
         return view('performance_form', $this->data);
     }
 

@@ -32,3 +32,12 @@ Route::get('/performance_budget/detail/{id?}', 'PerformanceBudgetController@getD
 Route::post('/performance_budget/detail/{id?}', 'PerformanceBudgetController@doDetail');
 Route::get('/performance_budget/detail/delete/{id?}', 'PerformanceBudgetController@doDetailDelete');
 Route::get('/performance_budget/detail/datatables/{id?}', 'PerformanceBudgetController@getDetailDatatables');
+
+Route::get('purchase_order', 'PurchaseOrderController@getPurchaseOrder');
+Route::get('purchase_order/datatables', 'PurchaseOrderController@getDatatables');
+Route::get('purchase_order/add', 'PurchaseOrderController@getAdd');
+Route::post('purchase_order/add', 'PurchaseOrderController@doAdd');
+Route::get('purchase_order/edit/{id?}', 'PurchaseOrderController@getAdd');
+Route::post('purchase_order/edit/{id?}', 'PurchaseOrderController@doAdd');
+Route::get('purchase_order/detail/{id?}', 'PurchaseOrderController@getDetail');
+Route::post('purchase_order/detail/{id?}', 'PurchaseOrderController@doDetail');

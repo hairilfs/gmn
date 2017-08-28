@@ -75,12 +75,12 @@
           </a>
         </li>
         <li class="@yield('nav_pb', '')">
-          <a href="{{ url('/performance_budget') }}">
+          <a href="{{ url('performance_budget') }}">
             <i class="fa fa-line-chart"></i> <span>Performance Budget</span>
           </a>
         </li>
         <li class="@yield('nav_po', '')">
-          <a href="{{ url('/') }}">
+          <a href="{{ url('purchase_order') }}">
             <i class="fa fa-file-text"></i> <span>Purchase Order</span>
           </a>
         </li>
