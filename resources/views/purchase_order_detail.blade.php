@@ -41,6 +41,7 @@
                     <div class="box-body">
                         <table class="table table-condensed table-bordered">
                             <tr>
+                                <th>#</th>
                                 <th>Qty</th>
                                 <th>Unit</th>
                                 <th>Uraian</th>
@@ -48,50 +49,58 @@
                                 <th>Total (Rp)</th>
                             </tr>
                             
-                            <?php $total_aja = 0; ?>                            
-                            @foreach ($po->po_detail as $element)
 
-                                <?php 
-                                    $total_row = $element->harga * $element->qty;
-                                    $total_aja += $total_row;
-                                ?>
+                            @if ( count($po->po_detail) )
+                                <?php $total_aja = 0; ?>                            
+                                @foreach ($po->po_detail as $element)
+
+                                    <?php 
+                                        $total_row = $element->harga * $element->qty;
+                                        $total_aja += $total_row;
+                                    ?>
+
+                                    <tr>
+                                        <td>
+                                            <a href="{{ url('purchase_order/detail/edit/'.$po->id.'/'.$element->id) }}" class="btn btn-xs btn-info" title="Edit"><i class="fa fa-pencil fa-fw"></i></a><br>
+                                            <a href="javascript:void(0)" class="btn btn-xs btn-danger" onclick="return confirmDelete({{ $element->id }}, '{{ $element->shortUraian() }}');" title="Delete"><i class="fa fa-close fa-fw"></i></a>
+                                        </td>
+                                        <td>{{ $element->qty }}</td>
+                                        <td>{{ $element->unit }}</td>
+                                        <td>{!! $element->uraian !!}</td>
+                                        <td class="kanan">{{ number_format($element->harga,0,',','.') }}</td>
+                                        <td class="kanan">{{ number_format($total_row,0,',','.') }}</td>
+                                    </tr>
+                                @endforeach
 
                                 <tr>
-                                    <td>{{ $element->qty }}</td>
-                                    <td>{{ $element->unit }}</td>
-                                    <td>{!! $element->uraian !!}</td>
-                                    <td class="kanan">{{ number_format($element->harga,0,',','.') }}</td>
-                                    <td class="kanan">{{ number_format($total_row,0,',','.') }}</td>
+                                    <td colspan="4"></td>
+                                    <th>Total (Rp)</th>
+                                    <td class="kanan">{{ number_format($total_aja,0,',','.') }}</td>
                                 </tr>
-                            @endforeach
 
-                            <tr>
-                                <td colspan="3"></td>
-                                <th>Total (Rp)</th>
-                                <td class="kanan">{{ number_format($total_aja,0,',','.') }}</td>
-                            </tr>
+                                <?php 
+                                    $ppn = $total_aja * 0.10; // PPN 10%
+                                    $grand_total = $total_aja + $ppn; // Setelah ditambah PPN
+                                ?>
+                                <tr>
+                                    <td colspan="4"></td>
+                                    <th>PPN 10% (Rp)</th>
+                                    <td class="kanan">{{ number_format($ppn,0,',','.') }}</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4"></td>
+                                    <th>Grand Total (Rp)</th>
+                                    <td class="kanan">{{ number_format($grand_total,0,',','.') }}</td>
+                                </tr>
+                            @endif
 
-                            <?php 
-                                $ppn = $total_aja * 0.10; // PPN 10%
-                                $grand_total = $total_aja + $ppn; // Setelah ditambah PPN
-                            ?>
-                            <tr>
-                                <td colspan="3"></td>
-                                <th>PPN 10% (Rp)</th>
-                                <td class="kanan">{{ number_format($ppn,0,',','.') }}</td>
-                            </tr>
-                            <tr>
-                                <td colspan="3"></td>
-                                <th>Grand Total (Rp)</th>
-                                <td class="kanan">{{ number_format($grand_total,0,',','.') }}</td>
-                            </tr>
                         </table>
                     </div>
                 </div>
 
                 <div class="box box-default">
                     <div class="box-header with-border">
-                        <h3 class="box-title">Add Purchase Order Detail</h3>
+                        <h3 class="box-title">{{ $po_detail->id ? 'Edit' : 'Add' }} Purchase Order Detail</h3>
                     </div>
 
                     @if (count($errors) > 0)
@@ -104,25 +113,25 @@
                     </div>
                     @endif
 
-                    <form class="form-horizontal" method="post">
+                    <form class="form-horizontal" method="post" id="form_po_detail">
                         {{ csrf_field() }}
                         <div class="box-body">
                             <div class="form-group">
                                 <label for="qty" class="col-sm-2 control-label">Qty</label>
                                 <div class="col-sm-2">
-                                    <input type="number" class="form-control" id="qty" name="qty" min="1" required>
+                                    <input type="number" class="form-control" id="qty" name="qty" min="1" value="{{ $po_detail->qty }}" required>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="unit" class="col-sm-2 control-label">Unit</label>
                                 <div class="col-sm-4">
-                                    <input type="text" class="form-control" id="unit" name="unit" required>
+                                    <input type="text" class="form-control" id="unit" name="unit" value="{{ $po_detail->unit }}" required>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="uraian" class="col-sm-2 control-label">Uraian</label>
                                 <div class="col-sm-10">
-                                    <textarea id="editor1" name="uraian" required></textarea>
+                                    <textarea id="editor1" name="uraian" required>{{ $po_detail->uraian }}</textarea>
                                 </div>
                             </div>
 
@@ -133,12 +142,14 @@
                                     <input type="text" class="form-control" id="harga" name="harga" required>
                                 </div>
                             </div>
-                        </div>
+                        </div>  
+
+                        @if ($po_detail->id)
+                            <input type="hidden" name="edit" value="{{ $po_detail->id }}">
+                        @endif
 
                         <div class="box-footer">
-                            {{-- <input type="reset" class="btn btn-default" value="Reset" /> --}}
                             <button type="submit" class="btn btn-primary pull-right">Save</button>
-                            <input type="hidden" name="edit" value="1" disabled>
                         </div>
 
                     </form>
@@ -180,7 +191,8 @@
                         </table>
                     </div>
                     <div class="box-footer">
-                        <button type="button" class="btn btn-success">Print</button>
+                        <button type="button" class="btn btn-info"><i class="fa fa-pencil"></i> Edit</button>
+                        <a href="{{ url('purchase_order/detail/export/'.$po->id) }}" class="btn btn-success"><i class="fa fa-file-excel-o"></i> Export</a>
                     </div>
                 </div>
                 <!-- /.box -->
@@ -212,6 +224,26 @@
             precision: 0
 
         });
+        
     });
+
+    $(window).load(function(){
+        @if ($po_detail->id)
+            $('html, body').animate({
+                scrollTop: $("#form_po_detail").offset().top
+            }, 1000);
+
+            $('#harga').maskMoney('mask', {{ $po_detail->harga }});
+        @endif
+    });
+
+    function confirmDelete(id, name) {
+        if (confirm('Delete '+name+'?')) {
+           window.location.href = '{{ url('purchase_order/detail/delete').'/' }}'+id;
+        } else {
+            return false;
+        }
+    }
+
 </script>
 @endsection

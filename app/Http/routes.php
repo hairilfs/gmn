@@ -41,3 +41,7 @@ Route::get('purchase_order/edit/{id?}', 'PurchaseOrderController@getAdd');
 Route::post('purchase_order/edit/{id?}', 'PurchaseOrderController@doAdd');
 Route::get('purchase_order/detail/{id?}', 'PurchaseOrderController@getDetail');
 Route::post('purchase_order/detail/{id?}', 'PurchaseOrderController@doDetail');
+Route::get('purchase_order/detail/edit/{po_id?}/{po_detail_id?}', 'PurchaseOrderController@getDetail');
+Route::post('purchase_order/detail/edit/{po_id?}/{po_detail_id?}', 'PurchaseOrderController@doDetail');
+Route::get('purchase_order/detail/delete/{po_detail_id?}', 'PurchaseOrderController@doDetailDelete');
+Route::get('purchase_order/detail/export/{id?}', 'PurchaseOrderController@exportExcel');
