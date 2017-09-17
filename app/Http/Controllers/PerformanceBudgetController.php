@@ -23,8 +23,9 @@ class PerformanceBudgetController extends Controller
     {
         return Datatables::of(PerformanceBudget::query())
         ->addColumn('action', function ($data) {
-                $btn_action = '<a href="'.url('performance_budget/edit/'.$data->id).'" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i> Edit</a> &nbsp;';
-                $btn_action .= '<a href="'.url('performance_budget/detail/'.$data->id).'" class="btn btn-xs btn-success"><i class="glyphicon glyphicon-search"></i> Detail</a>';
+                $btn_action = '<a href="'.url('performance_budget/edit/'.$data->id).'" class="btn btn-xs btn-primary" title="Edit"><i class="glyphicon glyphicon-pencil"></i></a> &nbsp;';
+                $btn_action .= '<a href="javascript:void(0);" onclick="return confirmDelete('.$data->id.',\''.$data->client_name.'\')" class="btn btn-xs btn-danger" title="Delete"><i class="glyphicon glyphicon-trash"></i></a> &nbsp;';
+                $btn_action .= '<a href="'.url('performance_budget/detail/'.$data->id).'" class="btn btn-xs btn-success" title="Detail"><i class="glyphicon glyphicon-search"></i></a>';
                 return $btn_action;
         })->editColumn('value', function(PerformanceBudget $data){
             return "Rp " . number_format($data->value,0,',','.');
@@ -111,6 +112,19 @@ class PerformanceBudgetController extends Controller
         $pb->save();
 
         return redirect('performance_budget/detail/'.$id);
+    }
+
+    public function doDelete(Request $request, $id=null)
+    {
+        if($id)
+        {
+            $pod = PerformanceBudget::findOrFail($id);
+            $pod->delete();
+
+            $notif = 'Delete data success!';
+            return redirect('performance_budget'); 
+        }       
+
     }
 
     public function doDetailDelete(Request $request, $id=null)

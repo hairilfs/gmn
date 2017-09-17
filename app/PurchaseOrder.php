@@ -13,7 +13,8 @@ class PurchaseOrder extends Model
     {
     	$data = PerformanceBudget::findOrFail($this->performance_budget_id);
     	// $data = $this->belongsTo('App\PerformanceBudget');
-    	return $data->client_name;
+        $retVal = ($data) ? $data->client_name : 'Not found';
+    	return $retVal;
     }
 
     public function po_detail()

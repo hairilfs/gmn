@@ -84,7 +84,12 @@
             <i class="fa fa-file-text"></i> <span>Purchase Order</span>
           </a>
         </li>
-        <li class="@yield('nav_', '')">
+        <li class="@yield('nav_invoice', '')">
+          <a href="{{ url('invoice') }}">
+            <i class="fa fa-envelope"></i> <span>Invoice</span>
+          </a>
+        </li>
+        {{-- <li class="@yield('nav_', '')">
           <a href="{{ url('/') }}">
             <i class="fa fa-th"></i> <span>Invoice Uang Muka</span>
           </a>
@@ -93,7 +98,7 @@
           <a href="{{ url('/') }}">
             <i class="fa fa-th"></i> <span>Invoice Pelunasan</span>
           </a>
-        </li>
+        </li> --}}
         <li class="@yield('nav_', '')">
           <a href="{{ url('/') }}">
             <i class="fa fa-th"></i> <span>Pembayaran</span>

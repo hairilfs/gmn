@@ -191,7 +191,7 @@
                         </table>
                     </div>
                     <div class="box-footer">
-                        <button type="button" class="btn btn-info"><i class="fa fa-pencil"></i> Edit</button>
+                        <a href="{{ url('purchase_order/edit/'.$po->id)}}" class="btn btn-info"><i class="fa fa-pencil"></i> Edit</a>
                         <a href="{{ url('purchase_order/detail/export/'.$po->id) }}" class="btn btn-success"><i class="fa fa-file-excel-o"></i> Export</a>
                     </div>
                 </div>

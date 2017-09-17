@@ -27,8 +27,9 @@ class PurchaseOrderController extends Controller
     {
         return Datatables::of(PurchaseOrder::query())
         ->addColumn('action', function ($data) {
-                $btn_action = '<a href="'.url('purchase_order/edit/'.$data->id).'" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i> Edit</a> &nbsp;';
-                $btn_action .= '<a href="'.url('purchase_order/detail/'.$data->id).'" class="btn btn-xs btn-success"><i class="glyphicon glyphicon-search"></i> Detail</a>';
+                $btn_action = '<a href="'.url('purchase_order/edit/'.$data->id).'" class="btn btn-xs btn-primary" title="Edit"><i class="glyphicon glyphicon-edit"></i></a> &nbsp;';
+                $btn_action .= '<a href="javascript:void(0);" onclick="return confirmDelete('.$data->id.',\''.$data->kepada.'\')" class="btn btn-xs btn-danger" title="Delete"><i class="glyphicon glyphicon-trash"></i></a> &nbsp;';
+                $btn_action .= '<a href="'.url('purchase_order/detail/'.$data->id).'" class="btn btn-xs btn-success" title="Detail"><i class="glyphicon glyphicon-search"></i></a>';
                 return $btn_action;
         })->editColumn('pb', function(PurchaseOrder $data){
             return $data->getPb();
@@ -72,6 +73,21 @@ class PurchaseOrderController extends Controller
         $po->save();
 
         return redirect('purchase_order');
+    }
+
+    public function doDelete(Request $request, $id=null)
+    {
+        if($id)
+        {
+            $pod = PurchaseOrder::findOrFail($id);
+            $po_detail = PurchaseOrderDetail::where('po_id', $id);
+            $pod->delete();
+            $po_detail->delete();
+
+            $notif = 'Delete data success!';
+            return redirect('purchase_order'); 
+        }       
+
     }
 
     public function getDetail(Request $request, $po_id=null, $po_detail_id=null)

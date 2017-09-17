@@ -68,5 +68,12 @@ $(function() {
     });
 });
 
+function confirmDelete(id, name) {
+    if (confirm('Delete '+name+'?')) {
+       window.location.href = '{{ url('performance_budget/delete').'/' }}'+id;
+    } else {
+        return false;
+    }
+}
 </script>
 @endsection
