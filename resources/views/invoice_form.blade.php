@@ -63,13 +63,13 @@
                                 <div class="form-group">
                                   <div class="radio">
                                     <label>
-                                      <input type="radio" name="tipe" value="0" required {{ $invoice->tipe == 0 ? 'checked' : '' }}>
+                                      <input type="radio" name="tipe" value="0" required {{ $invoice->tipe == 0 ? 'checked' : '' }} {{ $invoice->id ? 'disabled' : '' }} >
                                       Invoice Uang Muka
                                     </label>
                                   </div>
                                   <div class="radio">
                                     <label>
-                                      <input type="radio" name="tipe" value="1" required {{ $invoice->tipe == 1 ? 'checked' : '' }}>
+                                      <input type="radio" name="tipe" value="1" required {{ $invoice->tipe == 1 ? 'checked' : '' }} {{ $invoice->id ? 'disabled' : '' }}>
                                       Invoice Pelunasan
                                     </label>
                                   </div>

@@ -61,7 +61,7 @@ class PurchaseOrderController extends Controller
 
         $po = empty($id) ? new PurchaseOrder : PurchaseOrder::findOrFail($id);
 
-        $po->performance_budget_id  = $request->input('performance_budget_id');
+        $po->pb_id  = $request->input('pb_id');
         $po->purchase_order_no  = $request->input('purchase_order_no');
         $po->kepada             = $request->input('kepada');
         $po->address            = $request->input('address');

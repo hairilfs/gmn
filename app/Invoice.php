@@ -19,4 +19,10 @@ class Invoice extends Model
     	return $this->hasMany('App\PurchaseOrderDetail', 'po_id');
     }
 
+    public function getDetail()
+    {
+    	$po = PurchaseOrder::where('id', $this->po_id)->first();
+    	return $this->no_invoice .' dari '. $po->kepada;
+    }
+
 }

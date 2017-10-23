@@ -97,7 +97,7 @@ class PerformanceBudgetController extends Controller
         else 
         {
             $pb = new PerformanceBudgetDetail;
-            $pb->performance_budget_id  = $id;
+            $pb->pb_id  = $id;
             $notif = 'Add data success!';
         }
 
@@ -132,7 +132,7 @@ class PerformanceBudgetController extends Controller
         if($id)
         {
             $pbd = PerformanceBudgetDetail::findOrFail($id);
-            $id_pb = $pbd->performance_budget_id;
+            $id_pb = $pbd->pb_id;
             $pbd->delete();
             $notif = 'Delete data success!';
             return redirect('performance_budget/detail/'.$id_pb);
@@ -146,7 +146,7 @@ class PerformanceBudgetController extends Controller
 
     public function getDetailDatatables(Request $request, $id=null)
     {
-        $data = PerformanceBudgetDetail::where('performance_budget_id', $id)->get();
+        $data = PerformanceBudgetDetail::where('pb_id', $id)->get();
         return Datatables::of($data)
         ->editColumn('harga', function(PerformanceBudgetDetail $data){
             return "Rp " . number_format($data->harga,0,',','.');

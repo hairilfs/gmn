@@ -36,10 +36,10 @@
 
                         <div class="box-body">
                             <div class="form-group">
-                                <label for="performance_budget_id">Performance Budget</label>
-                                <select class="form-control" name="performance_budget_id" required>
+                                <label for="pb_id">Performance Budget</label>
+                                <select class="form-control" name="pb_id" required>
                                     @foreach ($pb as $element)
-                                        <option value="{{ $element->id }}" {{ $element->id == $po->performance_budget_id ? 'selected' : '' }}>{{ $element->client_name }}</option>
+                                        <option value="{{ $element->id }}" {{ $element->id == $po->pb_id ? 'selected' : '' }}>{{ $element->client_name }}</option>
                                     @endforeach
                                 </select>
                             </div>

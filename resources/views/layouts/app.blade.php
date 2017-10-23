@@ -76,7 +76,7 @@
         </li>
         <li class="@yield('nav_pb', '')">
           <a href="{{ url('performance_budget') }}">
-            <i class="fa fa-line-chart"></i> <span>Performance Budget</span>
+            <i class="fa fa-star"></i> <span>Performance Budget</span>
           </a>
         </li>
         <li class="@yield('nav_po', '')">
@@ -89,24 +89,15 @@
             <i class="fa fa-envelope"></i> <span>Invoice</span>
           </a>
         </li>
-        {{-- <li class="@yield('nav_', '')">
-          <a href="{{ url('/') }}">
-            <i class="fa fa-th"></i> <span>Invoice Uang Muka</span>
+        <li class="@yield('nav_pembayaran', '')">
+          <a href="{{ url('pembayaran') }}">
+            <i class="fa fa-money"></i> <span>Pembayaran</span>
           </a>
         </li>
-        <li class="@yield('nav_', '')">
-          <a href="{{ url('/') }}">
-            <i class="fa fa-th"></i> <span>Invoice Pelunasan</span>
-          </a>
-        </li> --}}
-        <li class="@yield('nav_', '')">
-          <a href="{{ url('/') }}">
-            <i class="fa fa-th"></i> <span>Pembayaran</span>
-          </a>
-        </li>
-        <li class="@yield('nav_', '')">
-          <a href="{{ url('/') }}">
-            <i class="fa fa-th"></i> <span>Realisasi</span>
+
+        <li class="@yield('nav_realisasi', '')">
+          <a href="{{ url('realisasi') }}">
+            <i class="fa fa-bar-chart"></i> <span>Realisasi</span>
           </a>
         </li>
         <li class="@yield('nav_', '')">

@@ -22,17 +22,17 @@ Route::post('auth/register', 'Auth\AuthController@postRegister');
 
 Route::get('/', 'DashboardController@getDashboard');
 
-Route::get('/performance_budget', 'PerformanceBudgetController@getPerformanceBudget');
-Route::get('/performance_budget/datatables', 'PerformanceBudgetController@getDatatables');
-Route::get('/performance_budget/add', 'PerformanceBudgetController@getAdd');
-Route::post('/performance_budget/add', 'PerformanceBudgetController@doAdd');
-Route::get('/performance_budget/edit/{id?}', 'PerformanceBudgetController@getAdd');
-Route::post('/performance_budget/edit/{id?}', 'PerformanceBudgetController@doAdd');
-Route::get('/performance_budget/detail/{id?}', 'PerformanceBudgetController@getDetail');
-Route::post('/performance_budget/detail/{id?}', 'PerformanceBudgetController@doDetail');
-Route::get('/performance_budget/delete/{id?}', 'PerformanceBudgetController@doDelete');
-Route::get('/performance_budget/detail/delete/{id?}', 'PerformanceBudgetController@doDetailDelete');
-Route::get('/performance_budget/detail/datatables/{id?}', 'PerformanceBudgetController@getDetailDatatables');
+Route::get('performance_budget', 'PerformanceBudgetController@getPerformanceBudget');
+Route::get('performance_budget/datatables', 'PerformanceBudgetController@getDatatables');
+Route::get('performance_budget/add', 'PerformanceBudgetController@getAdd');
+Route::post('performance_budget/add', 'PerformanceBudgetController@doAdd');
+Route::get('performance_budget/edit/{id?}', 'PerformanceBudgetController@getAdd');
+Route::post('performance_budget/edit/{id?}', 'PerformanceBudgetController@doAdd');
+Route::get('performance_budget/detail/{id?}', 'PerformanceBudgetController@getDetail');
+Route::post('performance_budget/detail/{id?}', 'PerformanceBudgetController@doDetail');
+Route::get('performance_budget/delete/{id?}', 'PerformanceBudgetController@doDelete');
+Route::get('performance_budget/detail/delete/{id?}', 'PerformanceBudgetController@doDetailDelete');
+Route::get('performance_budget/detail/datatables/{id?}', 'PerformanceBudgetController@getDetailDatatables');
 
 Route::get('purchase_order', 'PurchaseOrderController@getPurchaseOrder');
 Route::get('purchase_order/datatables', 'PurchaseOrderController@getDatatables');
@@ -61,3 +61,16 @@ Route::get('invoice/detail/edit/{po_id?}/{po_detail_id?}', 'InvoiceController@ge
 Route::post('invoice/detail/edit/{po_id?}/{po_detail_id?}', 'InvoiceController@doDetail');
 Route::get('invoice/detail/delete/{po_detail_id?}', 'InvoiceController@doDetailDelete');
 Route::get('invoice/detail/export/{id?}', 'InvoiceController@exportExcel');
+
+Route::get('pembayaran', 'PembayaranController@getPembayaran');
+Route::get('pembayaran/datatables', 'PembayaranController@getDatatables');
+Route::get('pembayaran/add', 'PembayaranController@getAdd');
+Route::post('pembayaran/add', 'PembayaranController@doAdd');
+Route::get('pembayaran/edit/{id?}', 'PembayaranController@getAdd');
+Route::post('pembayaran/edit/{id?}', 'PembayaranController@doAdd');
+Route::get('pembayaran/delete/{id?}', 'PembayaranController@doDelete');
+
+Route::get('realisasi', 'RealisasiController@getPerformanceBudget');
+Route::get('realisasi/datatables', 'RealisasiController@getDatatables');
+Route::get('realisasi/detail/{id?}', 'RealisasiController@getDetail');
+Route::get('realisasi/detail/datatables/{id?}', 'RealisasiController@getDetailDatatables');
