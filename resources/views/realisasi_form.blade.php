@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('nav_pb', 'active')
+@section('nav_realisasi', 'active')
 
 @section('head_css')
 <link rel="stylesheet" href="assets/plugins/datepicker/datepicker3.css">

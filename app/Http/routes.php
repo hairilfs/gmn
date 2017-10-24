@@ -73,4 +73,10 @@ Route::get('pembayaran/delete/{id?}', 'PembayaranController@doDelete');
 Route::get('realisasi', 'RealisasiController@getPerformanceBudget');
 Route::get('realisasi/datatables', 'RealisasiController@getDatatables');
 Route::get('realisasi/detail/{id?}', 'RealisasiController@getDetail');
-Route::get('realisasi/detail/datatables/{id?}', 'RealisasiController@getDetailDatatables');
+// Route::get('realisasi/detail/datatables/{id?}', 'RealisasiController@getDetailDatatables');
+
+Route::get('advance_payment', 'AdvancePaymentController@getAdvancePayment');
+Route::get('advance_payment/datatables', 'AdvancePaymentController@getDatatables');
+Route::get('advance_payment/detail/{id?}', 'AdvancePaymentController@getDetail');
+Route::get('advance_payment/add', 'AdvancePaymentController@getAdd');
+Route::post('advance_payment/add', 'AdvancePaymentController@doAdd');

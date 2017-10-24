@@ -100,9 +100,9 @@
             <i class="fa fa-bar-chart"></i> <span>Realisasi</span>
           </a>
         </li>
-        <li class="@yield('nav_', '')">
-          <a href="{{ url('/') }}">
-            <i class="fa fa-th"></i> <span>Keterangan</span>
+        <li class="@yield('nav_ap', '')">
+          <a href="{{ url('advance_payment') }}">
+            <i class="fa fa-bookmark"></i> <span>Advance Payment</span>
           </a>
         </li>
 
