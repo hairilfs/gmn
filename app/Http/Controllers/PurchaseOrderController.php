@@ -34,6 +34,7 @@ class PurchaseOrderController extends Controller
         })->editColumn('pb', function(PurchaseOrder $data){
             return $data->getPb();
         })->make(true);
+
     }
 
     public function getPurchaseOrder()
@@ -125,7 +126,7 @@ class PurchaseOrderController extends Controller
 
         $trans = array('Rp ' => '', '.' => '');
         $value = strtr($request->input('harga'), $trans);
-        $po->harga              = (int)$value;
+        $po->harga              = floatval($value);
         
         $po->save();
 

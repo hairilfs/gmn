@@ -192,7 +192,7 @@
                     </div>
                     <div class="box-footer">
                         <a href="{{ url('purchase_order/edit/'.$po->id)}}" class="btn btn-info"><i class="fa fa-pencil"></i> Edit</a>
-                        <a href="{{ url('purchase_order/detail/export/'.$po->id) }}" class="btn btn-success"><i class="fa fa-file-excel-o"></i> Export</a>
+                        {{-- <a href="{{ url('purchase_order/detail/export/'.$po->id) }}" class="btn btn-success"><i class="fa fa-file-excel-o"></i> Export</a> --}}
                     </div>
                 </div>
                 <!-- /.box -->
@@ -211,9 +211,9 @@
 <script type="text/javascript">
     $(function () {
         CKEDITOR.config.toolbar = [
-           ['Bold','Italic','Underline','-','Undo','Redo','-','Cut','Copy','Paste','-','Outdent','Indent'],           
+           ['Bold','Italic','Underline','-','Undo','Redo','-','Cut','Copy','Paste'],//'-','Outdent','Indent'],           
            ['NumberedList','BulletedList','-','JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock'],
-           ['Source']
+           // ['Source']
         ] ;
         CKEDITOR.replace('editor1');
 

@@ -75,7 +75,7 @@ class PembayaranController extends Controller
         $trans = array('Rp ' => '', '.' => '');
         $value = strtr($request->input('jumlah'), $trans);
 
-        $pembayaran->jumlah = (int)$value;  
+        $pembayaran->jumlah = floatval($value);  
         $pembayaran->save();
 
         return redirect('pembayaran');

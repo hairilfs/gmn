@@ -11,6 +11,7 @@ use App\PerformanceBudget;
 use App\Pembayaran;
 
 use Datatables;
+use PDF;
 
 class RealisasiController extends Controller
 {
@@ -41,8 +42,25 @@ class RealisasiController extends Controller
     public function getDetail(Request $request, $id=null)
     {
         $this->data['pb'] = PerformanceBudget::findOrFail($id);
-        $this->data['pembayaran'] = Pembayaran::where('pb_id', $id)->get();
+        $this->data['realisasi'] = (new Pembayaran)->getRealisasi($id);
+        // $this->data['pembayaran'] = Pembayaran::where('pb_id', $id)->get();
+
+        // dd($this->data['realisasi']);
         return view('realisasi_form', $this->data);
     } 
+
+    public function downloadPdf(Request $request, $id=null, $view=true)
+    {
+        $this->data['pb'] = PerformanceBudget::findOrFail($id);
+        $this->data['realisasi'] = (new Pembayaran)->getRealisasi($id);
+
+        if ($view) {
+            return view('print.realisasi', $this->data);
+        }
+
+        // ini_set('max_execution_time', 300); //300 seconds = 5 minutes
+        $pdf = PDF::loadView('print.realisasi', $this->data);
+        return $pdf->stream('PerformanceBudget-'.$this->data['pb']->client_name.'.pdf');
+    }
 
 }

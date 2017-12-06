@@ -26,7 +26,8 @@
                 <table class="table table-bordered" id="performance_budget">
                     <thead>
                         <tr>
-                            <th>ID</th>
+                            {{-- <th>ID</th> --}}
+                            <th>No.</th>
                             <th>Pekerjaan</th>
                             <th>Qty</th>
                             <th>Satuan</th>
@@ -35,6 +36,14 @@
                             <th>Action</th>
                         </tr>
                     </thead>
+                    <tfoot>
+                        <tr>
+                            <th colspan="4"></th>
+                            <th>Grand Total</th>
+                            <th>Rp {{ number_format($grand_total->total, 0, ',', '.') }}</th>
+                            <th></th>
+                        </tr>
+                    </tfoot>
                 </table>
             </div>
         </div>
@@ -104,7 +113,8 @@ $(function() {
         serverSide: true,
         ajax: '{{ url("performance_budget/detail/datatables/".$pb->id) }}',
         columns: [
-            { data: 'id', name: 'id' },
+            // { data: 'id', name: 'id' },
+            { data: 'DT_Row_Index', orderable: false, searchable: false},
             { data: 'pekerjaan', name: 'pekerjaan' },
             { data: 'qty', name: 'qty' },
             { data: 'satuan', name: 'satuan' },

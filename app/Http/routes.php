@@ -61,6 +61,7 @@ Route::get('invoice/detail/edit/{po_id?}/{po_detail_id?}', 'InvoiceController@ge
 Route::post('invoice/detail/edit/{po_id?}/{po_detail_id?}', 'InvoiceController@doDetail');
 Route::get('invoice/detail/delete/{po_detail_id?}', 'InvoiceController@doDetailDelete');
 Route::get('invoice/detail/export/{id?}', 'InvoiceController@exportExcel');
+Route::get('invoice/nom/{id?}', 'InvoiceController@getNom');
 
 Route::get('pembayaran', 'PembayaranController@getPembayaran');
 Route::get('pembayaran/datatables', 'PembayaranController@getDatatables');
@@ -73,6 +74,7 @@ Route::get('pembayaran/delete/{id?}', 'PembayaranController@doDelete');
 Route::get('realisasi', 'RealisasiController@getPerformanceBudget');
 Route::get('realisasi/datatables', 'RealisasiController@getDatatables');
 Route::get('realisasi/detail/{id?}', 'RealisasiController@getDetail');
+Route::get('realisasi/download/{id?}/{view?}', 'RealisasiController@downloadPdf');
 // Route::get('realisasi/detail/datatables/{id?}', 'RealisasiController@getDetailDatatables');
 
 Route::get('advance_payment', 'AdvancePaymentController@getAdvancePayment');
@@ -80,3 +82,7 @@ Route::get('advance_payment/datatables', 'AdvancePaymentController@getDatatables
 Route::get('advance_payment/detail/{id?}', 'AdvancePaymentController@getDetail');
 Route::get('advance_payment/add', 'AdvancePaymentController@getAdd');
 Route::post('advance_payment/add', 'AdvancePaymentController@doAdd');
+Route::get('advance_payment/edit/{id?}', 'AdvancePaymentController@getAdd');
+Route::post('advance_payment/edit/{id?}', 'AdvancePaymentController@doAdd');
+Route::get('advance_payment/delete/{id?}', 'AdvancePaymentController@doDelete');
+Route::post('advance_payment/confirm/{id?}', 'AdvancePaymentController@doConfirm');

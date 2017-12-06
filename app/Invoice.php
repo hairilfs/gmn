@@ -25,4 +25,5 @@ class Invoice extends Model
     	return $this->no_invoice .' dari '. $po->kepada;
     }
 
+
 }

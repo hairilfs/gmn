@@ -10,6 +10,7 @@ use App\Http\Controllers\Controller;
 use App\PerformanceBudget;
 use App\PerformanceBudgetDetail;
 use Datatables;
+use DB;
 
 class PerformanceBudgetController extends Controller
 {
@@ -25,7 +26,8 @@ class PerformanceBudgetController extends Controller
         ->addColumn('action', function ($data) {
                 $btn_action = '<a href="'.url('performance_budget/edit/'.$data->id).'" class="btn btn-xs btn-primary" title="Edit"><i class="glyphicon glyphicon-pencil"></i></a> &nbsp;';
                 $btn_action .= '<a href="javascript:void(0);" onclick="return confirmDelete('.$data->id.',\''.$data->client_name.'\')" class="btn btn-xs btn-danger" title="Delete"><i class="glyphicon glyphicon-trash"></i></a> &nbsp;';
-                $btn_action .= '<a href="'.url('performance_budget/detail/'.$data->id).'" class="btn btn-xs btn-success" title="Detail"><i class="glyphicon glyphicon-search"></i></a>';
+                $btn_action .= '<a href="'.url('performance_budget/detail/'.$data->id).'" class="btn btn-xs btn-success" title="Detail"><i class="glyphicon glyphicon-search"></i></a> &nbsp;';
+                $btn_action .= '<a href="'.url('realisasi/detail/'.$data->id).'" class="btn btn-xs btn-warning" title="Realisasi"><i class="glyphicon glyphicon-stats"></i></a>';
                 return $btn_action;
         })->editColumn('value', function(PerformanceBudget $data){
             return "Rp " . number_format($data->value,0,',','.');
@@ -47,6 +49,7 @@ class PerformanceBudgetController extends Controller
 
     public function doAdd(Request $request, $id=null)
     {
+
         $this->validate($request, [
                 'client_name' => 'required',
                 'client_address' => 'required',
@@ -67,7 +70,7 @@ class PerformanceBudgetController extends Controller
         $trans = array('Rp ' => '', '.' => '');
         $value = strtr($request->input('value'), $trans);
 
-        $pb->value              = (int)$value;
+        $pb->value              = floatval($value);
         
         $pb->save();
 
@@ -77,6 +80,8 @@ class PerformanceBudgetController extends Controller
     public function getDetail(Request $request, $id=null)
     {
         $this->data['pb'] = PerformanceBudget::findOrFail($id);
+        // $this->data['grand_total'] = PerformanceBudgetDetail::findOrFail($id)->select(DB::raw('SUM( qty * harga) as grand_total'));
+        $this->data['grand_total'] = DB::select('SELECT SUM(qty * harga) AS total FROM performance_budget_detail WHERE pb_id = ' . $id )[0];
         return view('performance_detail', $this->data);
     } 
 
@@ -107,7 +112,7 @@ class PerformanceBudgetController extends Controller
 
         $trans = array('Rp ' => '', '.' => '');
         $value = strtr($request->input('harga'), $trans);
-        $pb->harga              = (int)$value;
+        $pb->harga              = floatval($value);
         
         $pb->save();
 
@@ -176,6 +181,7 @@ class PerformanceBudgetController extends Controller
                 return $data->harga;
             }
         ])
+        ->addIndexColumn()
         ->make(true);
 
     }

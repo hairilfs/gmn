@@ -95,11 +95,11 @@
           </a>
         </li>
 
-        <li class="@yield('nav_realisasi', '')">
+        {{-- <li class="@yield('nav_realisasi', '')">
           <a href="{{ url('realisasi') }}">
             <i class="fa fa-bar-chart"></i> <span>Realisasi</span>
           </a>
-        </li>
+        </li> --}}
         <li class="@yield('nav_ap', '')">
           <a href="{{ url('advance_payment') }}">
             <i class="fa fa-bookmark"></i> <span>Advance Payment</span>

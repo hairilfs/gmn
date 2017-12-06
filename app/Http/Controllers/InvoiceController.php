@@ -57,7 +57,7 @@ class InvoiceController extends Controller
                 'no_invoice' => 'required',
                 'invoice_date' => 'required',
                 'nominal' => 'required',
-                'tipe' => 'required',
+                // 'tipe' => 'required',
             ]);
 
         $invoice = empty($id) ? new Invoice : Invoice::findOrFail($id);
@@ -65,12 +65,12 @@ class InvoiceController extends Controller
         $invoice->po_id         = $request->input('purchase_order_id');
         $invoice->no_invoice    = $request->input('no_invoice');
         $invoice->invoice_date  = date('Y-m-d H:i:s', strtotime($request->input('invoice_date')));
-        $invoice->tipe          = $request->input('tipe');
+        $invoice->tipe          = (int)$request->input('tipe');
 
         $trans = array('Rp ' => '', '.' => '');
         $value = strtr($request->input('nominal'), $trans);
 
-        $invoice->nominal = (int)$value;
+        $invoice->nominal = floatval($value);
 
         $invoice->save();
 
@@ -88,6 +88,14 @@ class InvoiceController extends Controller
             return redirect('invoice'); 
         }       
 
+    }
+
+    public function getNom(Request $request, $id=null)
+    {
+        $val = PurchaseOrder::findOrFail($id);
+        $nom = $val->getNom()->total;
+        $nom_with_tax = $nom + ($nom * 0.10);
+        return response()->json($nom_with_tax);
     }
 
 }

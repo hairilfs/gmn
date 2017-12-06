@@ -54,38 +54,55 @@
                             </div>
                             <div class="form-group">
                                 <label for="request">Jumlah Permohonan</label>
-                                <input type="text" class="form-control" name="request" id="request" value="{{ $advance_payment->request }}" required>
+                                <input type="text" class="form-control money" name="request" id="request" value="{{ $advance_payment->request }}" required>
                             </div>  
                             <div class="form-group">
                                 <label for="request_date">Tanggal Permohonan</label>
-                                <input type="text" data-date-end-date="0d" class="form-control" id="request_date" name="request_date" value="{{ $advance_payment->request_date ? date('d-m-Y', strtotime($advance_payment->advance_payment_date)) : date('d-m-Y') }}" required>
+                                <input type="text" data-date-end-date="0d" class="form-control datepick" id="request_date" name="request_date" value="{{ $advance_payment->request_date ? date('d-m-Y', strtotime($advance_payment->request_date)) : date('d-m-Y') }}" required>
                             </div>  
                             <div class="form-group">
                                 <label for="request_note">Keterangan Permohonan</label>
                                 <textarea name="request_note" id="request_note" class="form-control">{{ $advance_payment->request_note }}</textarea>
                             </div>                        
                         </div>
-                    </div>
-                    <!-- /.box -->
-                </div>
-
-                <div class="col-md-4">
-                    <!-- general form elements -->
-                    <div class="box box-default">
-                        <div class="box-header with-border">
-                            <h3 class="box-title">Action</h3>
-                        </div>
-                        <!-- /.box-header -->
-                        <!-- form start -->
                         <div class="box-footer">
                             <button type="submit" class="btn btn-primary">Save</button>
                         </div>
                     </div>
                     <!-- /.box -->
                 </div>
+            </form>
+            <form role="form" method="post" id="form_confirm" action="advance_payment/confirm/{{ $advance_payment->id }}">
+                {{ csrf_field() }}
+                <div class="col-md-4">
+                    <!-- general form elements -->
+                    <div class="box box-default">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Confirm</h3>
+                        </div>
+                        <div class="box-body">
+                            <div class="form-group">
+                                <label for="confirm_date">Tanggal Konfirmasi</label>
+                                <input type="text" data-date-end-date="0d" class="form-control datepick" id="confirm_date" name="confirm_date" value="{{ $advance_payment->confirm_date ? date('d-m-Y', strtotime($advance_payment->confirm_date)) : date('d-m-Y') }}" required>
+                            </div>  
+                            <div class="form-group">
+                                <label for="confirm">Jumlah Konfirmasi</label>
+                                <input type="text" class="form-control money" name="confirm" id="confirm" value="{{ $advance_payment->confirm }}" required>
+                            </div>  
+                            <div class="form-group">
+                                <label for="confirm_note">Keterangan Konfirmasi</label>
+                                <textarea name="confirm_note" id="confirm_note" class="form-control">{{ $advance_payment->confirm_note }}</textarea>
+                            </div>                        
+                        </div>
+                        <div class="box-footer">
+                            <button type="submit" class="btn btn-warning">Confirm</button>
+                        </div>
+                    </div>
+                    <!-- /.box -->
+                </div>
+            </form>
 
             </div>
-        </form>
     </section>
 </div>
 @endsection
@@ -96,13 +113,13 @@
 
 <script type="text/javascript">
 
-    $('#request_date').datepicker({
+    $('.datepick').datepicker({
       autoclose: true,
       todayHighlight: true,
       format: 'dd-mm-yyyy',
     });
 
-    $('#request').maskMoney({
+    $('.money').maskMoney({
         prefix: 'Rp ',
         thousands: '.',
         decimal: ',',
@@ -113,5 +130,25 @@
     @if ($advance_payment->request)
         $('#request').maskMoney('mask', {{ $advance_payment->request }});
     @endif
+
+    @if ($advance_payment->id && $advance_payment->confirm )
+        $('#confirm').maskMoney('mask', {{ $advance_payment->confirm }});
+        $("#form_confirm :input").prop("disabled", true);
+    @elseif($advance_payment->id && !$advance_payment->confirm)
+        $('#confirm').maskMoney('mask', {{ $advance_payment->confirm }});
+    @else 
+        $("#form_confirm :input").prop("disabled", true);
+    @endif
+
+    $('#form_confirm').on('submit', function(e){
+
+        var x = confirm('Yakin akan konfirmasi Advance Payment ini?');
+        if(x) {
+            return true;
+        } else {
+            e.preventDefault();
+            return false;
+        }
+    });
 </script>
 @endsection

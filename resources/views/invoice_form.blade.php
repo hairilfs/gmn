@@ -39,7 +39,7 @@
                                 <label for="purchase_order_id">Purchase Order</label>
                                 <select class="form-control" name="purchase_order_id" required>
                                     @foreach ($po as $element)
-                                        <option value="{{ $element->id }}" {{ $element->id == $invoice->id ? 'selected' : '' }}>{{ $element->kepada }}</option>
+                                        <option data-nom="{{ $element->getNom()->total }}" value="{{ $element->id }}" {{ $element->id == $invoice->po_id ? 'selected' : '' }}>{{ $element->kepada }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -106,6 +106,15 @@
 <script src="https://cdn.rawgit.com/plentz/jquery-maskmoney/master/dist/jquery.maskMoney.min.js"></script>
 
 <script type="text/javascript">
+
+    $('select[name=purchase_order_id]').on('change', function(){
+        var _id = $(this).val();
+        $('#nominal').val('').attr('placeholder', 'Loading...');
+        $.get('invoice/nom/'+_id, function(resp){
+            console.log(resp);
+            $('#nominal').maskMoney('mask', resp);
+        }, 'json');
+    });
 
     $('#invoice_date').datepicker({
       autoclose: true,

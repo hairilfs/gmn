@@ -55,11 +55,11 @@
                                 <th class="">Saldo</th>
                             </tr>
 
-                            <?php $saldo = $pb->value; $belanja = 0; ?>
-                            @foreach ($pembayaran as $key => $element)
+                            <?php $saldo = $pb->value; $belanja = 0; $no = 1;?>
+                            @foreach ($realisasi as $key => $element)
                                 <?php 
-                                    $saldo -= $element->jumlah; 
-                                    $belanja += $element->jumlah; 
+                                    $saldo -= $element['jumlah']; 
+                                    $belanja += $element['jumlah']; 
                                     $percent = ($belanja / $pb->value) * 100;
                                     $percent = number_format($percent, 2);
 
@@ -74,18 +74,20 @@
                                     }
                                 ?>
                                 <tr>
-                                    <td>{{ $key+1 }}</td>
-                                    <td>{{ $element->getDate() }}</td>
-                                    <td>{{ $element->getDetail() }}</td>
+                                    <td>{{ $no }}</td>
+                                    <td>{{ $element['date'] }}</td>
+                                    <td>{{ $element['jenis'] == 'Advance Payment' ? 'Advance Payment: '.$element['detail'] : $element['detail'] }}</td>
                                     <td>
                                         <div class="progress progress-sm" title="{{ $percent }}%">
                                         <div class="progress-bar progress-bar-{{ $color }}" style="width: {{ $percent }}%"></div>
                                         </div>
                                     </td>
-                                    <td>{{ "Rp " . number_format($element->jumlah,0,',','.') }}</td>
+                                    <td>{{ "Rp " . number_format($element['jumlah'],0,',','.') }}</td>
                                     <td>{{ "Rp " . number_format($saldo,0,',','.') }}</td>
                                     {{-- <td><span class="badge bg-red">55%</span></td> --}}
                                 </tr>
+
+                                <?php $no++; ?>
                             @endforeach
                           </table>
                     </div>
@@ -102,7 +104,8 @@
                     <!-- /.box-header -->
                     <!-- form start -->
                     <div class="box-footer">
-                        <button type="button" class="btn btn-success">Download</button>
+                        {{-- <button type="button" class="btn btn-success">Download</button> --}}
+                        <a href="{{ url('realisasi/download/'.$pb->id) }}" class="btn btn-success">Download</a>
                     </div>
                 </div>
                 <!-- /.box -->
