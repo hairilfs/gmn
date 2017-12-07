@@ -123,8 +123,9 @@ class PerformanceBudgetController extends Controller
     {
         if($id)
         {
-            $pod = PerformanceBudget::findOrFail($id);
-            $pod->delete();
+            $pb = PerformanceBudget::findOrFail($id);
+            $pb->deleteToo();
+            $pb->delete();
 
             $notif = 'Delete data success!';
             return redirect('performance_budget'); 

@@ -82,6 +82,7 @@ class PurchaseOrderController extends Controller
         {
             $pod = PurchaseOrder::findOrFail($id);
             $po_detail = PurchaseOrderDetail::where('po_id', $id);
+            $pod->deleteToo();
             $pod->delete();
             $po_detail->delete();
 

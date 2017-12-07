@@ -28,4 +28,22 @@ class PurchaseOrder extends Model
         return $nom;
     }
 
+    public function deleteToo()
+    {
+        $pod    = PurchaseOrderDetail::where('po_id', $this->id)->delete(); // hapus semua detail po, dengan id po saat ini
+        $in     = Invoice::where('po_id', $this->id)->get(); // ambil semua invoice, dgn id po saat ini
+        foreach ($in as $value2) { // loop setiap invoice
+            $pem = Pembayaran::where('invoice_id', $value2->id)->delete(); // hapus semua pembayaran berdasarkan id invoice saat ini
+            
+            $value2->delete(); // hapus invoice saat ini
+        }
+
+
+        $pem    = Pembayaran::where('pb_id', $this->id)->delete(); // hapus semua pembayaran berdasarkan id pb saat ini
+        $ap     = AdvancePayment::where('pb_id', $this->id)->delete(); // hapus semua advance payment berdasarkan pb saat ini
+
+        // dd('ok!');
+
+    }
+
 }
