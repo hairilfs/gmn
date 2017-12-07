@@ -11,12 +11,24 @@ class PerformanceBudget extends Model
     protected $dates = [
         'created_at',
         'updated_at',
+        'start_date',
+        'end_date',
         'contract_date'
     ];
 
     public function getContractDate()
     {
-    	return $this->contract_date->format('d F Y');
+        return $this->contract_date->format('d F Y');
+    }
+
+    public function getStartDate()
+    {
+        return $this->start_date->format('d-m-Y');
+    }
+
+    public function getEndDate()
+    {
+    	return $this->end_date->format('d-m-Y');
     }
 
     public function deleteToo()

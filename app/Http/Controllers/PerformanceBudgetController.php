@@ -59,13 +59,19 @@ class PerformanceBudgetController extends Controller
                 'value' => 'required',
             ]);
 
+        // dd($request);
+
         $pb = empty($id) ? new PerformanceBudget : PerformanceBudget::findOrFail($id);
 
         $pb->client_name        = $request->input('client_name');
         $pb->client_address     = $request->input('client_address');
         $pb->job_title          = $request->input('job_title');
         $pb->contract_number    = $request->input('contract_number');
-        $pb->contract_date      = date('Y-m-d H:i:s', strtotime($request->input('contract_date')));
+        $pb->contract_date      = date('Y-m-d', strtotime($request->input('contract_date')));
+
+        $pelaksanaan            = explode(' s.d. ', $request->pelaksanaan);
+        $pb->start_date         = date('Y-m-d', strtotime($pelaksanaan[0]));
+        $pb->end_date           = date('Y-m-d', strtotime($pelaksanaan[1]));
 
         $trans = array('Rp ' => '', '.' => '');
         $value = strtr($request->input('value'), $trans);

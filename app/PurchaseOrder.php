@@ -38,12 +38,6 @@ class PurchaseOrder extends Model
             $value2->delete(); // hapus invoice saat ini
         }
 
-
-        $pem    = Pembayaran::where('pb_id', $this->id)->delete(); // hapus semua pembayaran berdasarkan id pb saat ini
-        $ap     = AdvancePayment::where('pb_id', $this->id)->delete(); // hapus semua advance payment berdasarkan pb saat ini
-
-        // dd('ok!');
-
     }
 
 }

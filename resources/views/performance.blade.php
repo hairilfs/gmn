@@ -69,7 +69,7 @@ $(function() {
 });
 
 function confirmDelete(id, name) {
-    if (confirm('Delete '+name+'?')) {
+    if (confirm('Delete '+name+'? Semua data yang berhubungan dengan Performance Budget ini akan ikut terhapus.')) {
        window.location.href = '{{ url('performance_budget/delete').'/' }}'+id;
     } else {
         return false;

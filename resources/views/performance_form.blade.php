@@ -4,6 +4,7 @@
 
 @section('head_css')
 <link rel="stylesheet" href="assets/plugins/datepicker/datepicker3.css">
+<link rel="stylesheet" href="assets/plugins/daterangepicker/daterangepicker.css">
 @endsection
 
 @section('content')
@@ -57,6 +58,18 @@
                                 <input type="text" class="form-control" id="contract_date" name="contract_date" value="{{ $pb->contract_date ? date('d-m-Y', strtotime($pb->contract_date)) : '' }}" placeholder="Enter contract date" required>
                             </div>
 
+                            <!-- Date range -->
+                            <div class="form-group">
+                                <label>Waktu Pelaksanaan</label>
+
+                                <div class="input-group">
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-calendar"></i>
+                                    </div>
+                                    <input type="text" class="form-control pull-right" id="pelaksanaan" name="pelaksanaan" value="">
+                                </div>
+                            </div>
+
                             <div class="form-group">
                                 <label for="value">Value</label>
                                 <input type="text" class="form-control" id="value" name="value" placeholder="Enter contract value" required>
@@ -90,6 +103,8 @@
 
 @section('bottom_script')
 <script src="assets/plugins/datepicker/bootstrap-datepicker.js"></script>
+<script src="assets/plugins/daterangepicker/moment.min.js"></script>
+<script src="assets/plugins/daterangepicker/daterangepicker.js"></script>
 <script src="https://cdn.rawgit.com/plentz/jquery-maskmoney/master/dist/jquery.maskMoney.min.js"></script>
 
 <script type="text/javascript">
@@ -105,6 +120,19 @@
         decimal: ',',
         precision: 0
 
+    });
+    
+    $('#pelaksanaan').daterangepicker({
+        "showDropdowns": true,
+        "locale": {
+            "format": "DD-MM-YYYY",
+            "separator": " s.d. "            
+        },
+        "startDate": '{{ $pb->getStartDate() }}',
+        "endDate": '{{ $pb->getEndDate() }}',
+        "drops": "up"
+    }, function(start, end, label) {
+      console.log("New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')");
     });
 
     @if ($pb->value)
