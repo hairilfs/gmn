@@ -35,7 +35,9 @@ class InvoiceController extends Controller
             return $data->getPo->kepada;
         })->editColumn('nominal', function(Invoice $data){
             return "Rp " . number_format($data->nominal,0,',','.');
-        })->make(true);
+        })
+        ->addIndexColumn()
+        ->make(true);
     }
 
     public function getInvoice()
@@ -82,6 +84,7 @@ class InvoiceController extends Controller
         if($id)
         {
             $invoice = Invoice::findOrFail($id);
+            $invoice->deleteToo();
             $invoice->delete();
 
             $notif = 'Delete data success!';

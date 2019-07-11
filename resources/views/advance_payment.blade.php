@@ -1,5 +1,5 @@
 @extends('layouts.app')
-
+@section('title', 'Advance Payment')
 @section('nav_ap', 'active')
 
 @section('head_css')
@@ -26,7 +26,7 @@
                 <table class="table table-bordered" id="advance_payment">
                     <thead>
                         <tr>
-                            <th>ID</th>
+                            <th>No.</th>
                             <th>Pegawai</th>
                             <th>Nominal</th>
                             <th>Tgl.</th>
@@ -55,7 +55,8 @@ $(function() {
         serverSide: true,
         ajax: '{{ url("advance_payment/datatables") }}',
         columns: [
-            { data: 'id', name: 'id' },
+            // { data: 'id', name: 'id' },
+            { data: 'DT_Row_Index', orderable: false, searchable: false},
             { data: 'nama', name: 'nama' },
             { data: 'request', name: 'request' },
             { data: 'request_date', name: 'request_date' },

@@ -33,7 +33,9 @@ class PembayaranController extends Controller
             return $data->getDetail();
         })->editColumn('jumlah', function(Pembayaran $data){
             return "Rp " . number_format($data->jumlah,0,',','.');
-        })->make(true);
+        })
+        ->addIndexColumn()
+        ->make(true);
     }
 
     public function getPembayaran()

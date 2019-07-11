@@ -1,5 +1,5 @@
 @extends('layouts.app')
-
+@section('title', 'Pembayaran')
 @section('nav_pembayaran', 'active')
 
 @section('head_css')
@@ -26,7 +26,7 @@
                 <table class="table table-bordered" id="pembayaran">
                     <thead>
                         <tr>
-                            <th>ID</th>
+                            <th>No.</th>
                             <th>Jenis</th>
                             <th>Inv. / Ket.</th>
                             <th>Jumlah</th>
@@ -55,7 +55,8 @@ $(function() {
         serverSide: true,
         ajax: '{{ url("pembayaran/datatables") }}',
         columns: [
-            { data: 'id', name: 'id' },
+            // { data: 'id', name: 'id' },
+            { data: 'DT_Row_Index', orderable: false, searchable: false},
             { data: 'jenis', name: 'jenis' },
             { data: 'invoice_id', name: 'invoice_id' },
             { data: 'jumlah', name: 'jumlah' },

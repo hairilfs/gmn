@@ -1,5 +1,5 @@
 @extends('layouts.app')
-
+@section('title', 'Invoice')
 @section('nav_invoice', 'active')
 
 @section('head_css')
@@ -26,7 +26,7 @@
                 <table class="table table-bordered" id="invoice">
                     <thead>
                         <tr>
-                            <th>ID</th>
+                            <th>No.</th>
                             <th>No Invoice</th>
                             <th>PO</th>
                             <th>Tipe</th>
@@ -56,7 +56,8 @@ $(function() {
         serverSide: true,
         ajax: '{{ url("invoice/datatables") }}',
         columns: [
-            { data: 'id', name: 'id' },
+            // { data: 'id', name: 'id' },
+            { data: 'DT_Row_Index', orderable: false, searchable: false},
             { data: 'no_invoice', name: 'no_invoice' },
             { data: 'po_id', name: 'po_id' },
             { data: 'tipe', name: 'tipe' },
@@ -69,7 +70,7 @@ $(function() {
 });
 
 function confirmDelete(id, name) {
-    if (confirm('Delete '+name+'?')) {
+    if (confirm('Delete '+name+'? Semua data yang berhubungan dengan Invoice ini akan ikut terhapus.')) {
        window.location.href = '{{ url('invoice/delete').'/' }}'+id;
     } else {
         return false;

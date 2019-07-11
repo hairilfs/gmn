@@ -39,7 +39,9 @@ class AdvancePaymentController extends Controller
                 $status = '<span class="label bg-yellow">Unconfirmed</span>';
             }
             return $status;
-        })->make(true);
+        })
+        ->addIndexColumn()
+        ->make(true);
     }
 
     public function getAdvancePayment()

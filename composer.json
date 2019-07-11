@@ -10,7 +10,8 @@
         "yajra/laravel-datatables-oracle": "^6.29",
         "maatwebsite/excel": "^2.1",
         "nesbot/carbon": "^1.22",
-        "barryvdh/laravel-dompdf": "^0.8.1"
+        "barryvdh/laravel-dompdf": "^0.8.1",
+        "fx3costa/laravelchartjs": "^2.5"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

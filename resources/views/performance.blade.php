@@ -1,5 +1,5 @@
 @extends('layouts.app')
-
+@section('title', 'Performance Budget')
 @section('nav_pb', 'active')
 
 @section('head_css')
@@ -26,7 +26,7 @@
                 <table class="table table-bordered" id="performance_budget">
                     <thead>
                         <tr>
-                            <th>ID</th>
+                            <th>No.</th>
                             <th>Client</th>
                             <th>Job Title</th>
                             <th>Contract Date</th>
@@ -56,7 +56,8 @@ $(function() {
         serverSide: true,
         ajax: '{{ url("performance_budget/datatables") }}',
         columns: [
-            { data: 'id', name: 'id' },
+            // { data: 'id', name: 'id' },
+            { data: 'DT_Row_Index', orderable: false, searchable: false},
             { data: 'client_name', name: 'client_name' },
             { data: 'job_title', name: 'job_title' },
             { data: 'contract_date', name: 'contract_date' },

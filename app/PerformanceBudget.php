@@ -23,12 +23,12 @@ class PerformanceBudget extends Model
 
     public function getStartDate()
     {
-        return $this->start_date->format('d-m-Y');
+        return $this->start_date ? $this->start_date->format('d-m-Y') : date('d-m-Y');
     }
 
     public function getEndDate()
     {
-    	return $this->end_date->format('d-m-Y');
+    	return $this->end_date ? $this->end_date->format('d-m-Y') : date('d-m-Y');
     }
 
     public function deleteToo()
@@ -49,12 +49,24 @@ class PerformanceBudget extends Model
 
         }
 
-
         $pem    = Pembayaran::where('pb_id', $this->id)->delete(); // hapus semua pembayaran berdasarkan id pb saat ini
         $ap     = AdvancePayment::where('pb_id', $this->id)->delete(); // hapus semua advance payment berdasarkan pb saat ini
+        
+    }
 
-        // dd('ok!');
+    public function detail()
+    {
+        return $this->hasMany('App\PerformanceBudgetDetail', 'pb_id', 'id');
+    }
 
+    public function performanceProgress()
+    {
+        $detail = $this->detail;
+        $progress = $detail->map(function($item, $key){
+           return $item->qty * $item->harga; 
+        })->sum();
+
+        return $detail->count() ? $progress : 0;
     }
 
 }

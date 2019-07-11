@@ -1,5 +1,5 @@
 @extends('layouts.app')
-
+@section('title', 'Performance Budget Detail')
 @section('nav_pb', 'active')
 
 @section('head_css')

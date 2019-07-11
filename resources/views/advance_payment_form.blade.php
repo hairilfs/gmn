@@ -1,5 +1,5 @@
 @extends('layouts.app')
-
+@section('title', 'Advance Payment')
 @section('nav_ap', 'active')
 
 @section('head_css')

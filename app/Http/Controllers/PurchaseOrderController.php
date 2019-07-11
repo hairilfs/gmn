@@ -33,7 +33,9 @@ class PurchaseOrderController extends Controller
                 return $btn_action;
         })->editColumn('pb', function(PurchaseOrder $data){
             return $data->getPb();
-        })->make(true);
+        })
+        ->addIndexColumn()
+        ->make(true);
 
     }
 

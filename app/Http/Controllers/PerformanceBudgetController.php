@@ -33,7 +33,9 @@ class PerformanceBudgetController extends Controller
             return "Rp " . number_format($data->value,0,',','.');
         })->editColumn('contract_date', function(PerformanceBudget $data){
             return date('d M Y', strtotime($data->contract_date));
-        })->make(true);
+        })
+        ->addIndexColumn()
+        ->make(true);
     }
 
     public function getPerformanceBudget()

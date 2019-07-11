@@ -1,5 +1,5 @@
 @extends('layouts.app')
-
+@section('title', 'Realisasi')
 @section('nav_realisasi', 'active')
 
 @section('head_css')
@@ -23,7 +23,7 @@
                 <table class="table table-bordered" id="realisasi">
                     <thead>
                         <tr>
-                            <th>ID</th>
+                            <th>No.</th>
                             <th>Client</th>
                             <th>Job Title</th>
                             <th>Contract Date</th>
@@ -51,7 +51,8 @@ $(function() {
         serverSide: true,
         ajax: '{{ url("realisasi/datatables") }}',
         columns: [
-            { data: 'id', name: 'id' },
+            // { data: 'id', name: 'id' },
+            { data: 'DT_Row_Index', orderable: false, searchable: false},
             { data: 'client_name', name: 'client_name' },
             { data: 'job_title', name: 'job_title' },
             { data: 'contract_date', name: 'contract_date' },

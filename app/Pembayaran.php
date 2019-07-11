@@ -64,7 +64,7 @@ class Pembayaran extends Model
         $data = [];
 
         $pembayaran = self::where('pb_id', $pb_id)->get();
-        $advance_payment = AdvancePayment::where('pb_id', $pb_id)->get();
+        $advance_payment = AdvancePayment::where('pb_id', $pb_id)->where('confirm', '>', 0)->get();
 
         foreach ($pembayaran as $value) {
             $sort = strtotime($value->created_at);
@@ -78,8 +78,8 @@ class Pembayaran extends Model
             $sort = strtotime($value->created_at);
             $data[$sort]['jenis']      = 'Advance Payment';
             $data[$sort]['date']       = date('d F Y H:i', strtotime($value->created_at));
-            $data[$sort]['detail']     = $value->request_note;
-            $data[$sort]['jumlah']     = $value->request;
+            $data[$sort]['detail']     = $value->confirm_note;
+            $data[$sort]['jumlah']     = $value->confirm;
 
 
         }

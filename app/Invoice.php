@@ -25,5 +25,11 @@ class Invoice extends Model
     	return $this->no_invoice .' dari '. $po->kepada;
     }
 
+    public function deleteToo()
+    {
+        $pem = Pembayaran::where('invoice_id', $this->id)->delete(); // hapus semua pembayaran berdasarkan id invoice saat ini
+        return $pem;
+    }
+
 
 }

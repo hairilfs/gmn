@@ -128,9 +128,12 @@
 
   <footer class="main-footer">
     <div class="pull-right hidden-xs">
-      <b>Version</b> 2.3.8
+      {{-- <b>Version</b> 2.3.8 --}}
+      <small>
+        Template by <a href="http://almsaeedstudio.com" target="_blank">Almsaeed Studio</a>
+      </small>
     </div>
-    <strong>Copyright &copy; 2014-2016 <a href="http://almsaeedstudio.com">Almsaeed Studio</a>.</strong> All rights
+    <strong>Copyright &copy; 2017 Dashboard Performance Budget.</strong> All rights
     reserved.
   </footer>
 

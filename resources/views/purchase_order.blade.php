@@ -1,5 +1,5 @@
 @extends('layouts.app')
-
+@section('title', 'Purchase Order')
 @section('nav_po', 'active')
 
 @section('head_css')
@@ -26,7 +26,7 @@
                 <table class="table table-bordered" id="purchase_order">
                     <thead>
                         <tr>
-                            <th>ID</th>
+                            <th>No.</th>
                             <th>Kepada</th>
                             <th>C/P</th>
                             <th>Perf. Budget</th>
@@ -55,7 +55,8 @@ $(function() {
         serverSide: true,
         ajax: '{{ url("purchase_order/datatables") }}',
         columns: [
-            { data: 'id', name: 'id' },
+            // { data: 'id', name: 'id' },
+            { data: 'DT_Row_Index', orderable: false, searchable: false},
             { data: 'kepada', name: 'kepada' },
             { data: 'person', name: 'person' },
             { data: 'pb', name: 'pb' },
